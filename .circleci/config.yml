@@ -24,7 +24,11 @@ commands:
       - run: curl -OL https://raw.githubusercontent.com/graknlabs/dependencies/master/tool/bazelinstall/linux.sh
       - run: bash ./linux.sh && rm ./linux.sh
       - run: curl -OL https://raw.githubusercontent.com/graknlabs/dependencies/master/tool/bazelinstall/rbe.sh
-      - run: bash ./rbe.sh && rm ./rbe.sh          
+      - run: bash ./rbe.sh && rm ./rbe.sh
+
+  install-artifact-credentials:
+    steps:
+      - run: bazel run @graknlabs_dependencies//distribution/artifact:create-netrc
 
   run-bazel:
     parameters:
@@ -49,6 +53,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel build //...
       - run:
@@ -65,6 +70,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run: bazel run @graknlabs_dependencies//tool/checkstyle:test-coverage
       - run-bazel:
           command: bazel test $(bazel query 'kind(checkstyle_test, //...)')
@@ -76,6 +82,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/integration/concept:concept-it --test_output=errors
 
@@ -86,6 +93,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/integration/answer:answer-it --test_output=errors
 
@@ -96,6 +104,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/integration/tracing:tracing-it --test_output=errors
 
@@ -106,6 +115,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/connection/keyspace:test-core --test_output=errors
       - run-bazel:
@@ -120,6 +130,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/define:test-core --test_output=errors
 
@@ -130,6 +141,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/delete:test-core --test_output=errors
 
@@ -140,6 +152,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/get:test-core --test_output=errors
 
@@ -150,6 +163,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/insert:test-core --test_output=errors
 
@@ -160,6 +174,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/match:test-core --test_output=errors
 
@@ -170,6 +185,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/undefine:test-core --test_output=errors
 
@@ -180,6 +196,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/reasoner/explanation:test-core --test_output=errors
 
@@ -189,6 +206,7 @@ jobs:
     working_directory: ~/client-java
     steps:
       - checkout
+      - install-artifact-credentials
       - install-bazel
       - run: |
           export DEPLOY_MAVEN_USERNAME=$REPO_GRAKN_USERNAME
@@ -202,6 +220,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/assembly:test-assembly-query --test_output=errors
 
@@ -211,6 +230,7 @@ jobs:
     working_directory: ~/client-java
     steps:
       - checkout
+      - install-artifact-credentials
       - install-bazel
       - run-grakn
       - run: sed -i -e "s/CLIENT_JAVA_VERSION_MARKER/$CIRCLE_SHA1/g" test/deployment/pom.xml
@@ -224,6 +244,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run: |
           export SYNC_DEPENDENCIES_TOKEN=$REPO_GITHUB_TOKEN
           bazel run @graknlabs_dependencies//tool/sync:dependencies -- \
@@ -236,6 +257,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run: |
           export RELEASE_APPROVAL_USERNAME=$REPO_GITHUB_USERNAME
           export RELEASE_APPROVAL_TOKEN=$REPO_GITHUB_TOKEN
@@ -247,6 +269,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run: |
           bazel run @graknlabs_dependencies//tool/release:validate-deps -- \
           graknlabs_common graknlabs_graql graknlabs_protocol graknlabs_grabl_tracing
@@ -258,6 +281,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run: |
           pip install certifi
           export RELEASE_NOTES_TOKEN=$REPO_GITHUB_TOKEN
@@ -273,6 +297,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run: |
           export DEPLOY_MAVEN_USERNAME=$REPO_GRAKN_USERNAME
           export DEPLOY_MAVEN_PASSWORD=$REPO_GRAKN_PASSWORD
@@ -285,6 +310,7 @@ jobs:
     steps:
       - install-bazel
       - checkout
+      - install-artifact-credentials
       - run: |
           export SYNC_DEPENDENCIES_TOKEN=$REPO_GITHUB_TOKEN
           bazel run @graknlabs_dependencies//tool/sync:dependencies -- \
@@ -296,6 +322,7 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
+      - install-artifact-credentials
       - run: git push --delete https://$REPO_GITHUB_TOKEN@github.com/graknlabs/client-java $CIRCLE_BRANCH
 
 workflows:
