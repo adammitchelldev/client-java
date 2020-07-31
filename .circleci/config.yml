@@ -51,8 +51,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel build //...
@@ -68,8 +68,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run: bazel run @graknlabs_dependencies//tool/checkstyle:test-coverage
       - run-bazel:
@@ -80,8 +80,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/integration/concept:concept-it --test_output=errors
@@ -91,8 +91,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/integration/answer:answer-it --test_output=errors
@@ -102,8 +102,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/integration/tracing:tracing-it --test_output=errors
@@ -113,8 +113,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/connection/keyspace:test-core --test_output=errors
@@ -128,8 +128,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/define:test-core --test_output=errors
@@ -139,8 +139,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/delete:test-core --test_output=errors
@@ -150,8 +150,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/get:test-core --test_output=errors
@@ -161,8 +161,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/insert:test-core --test_output=errors
@@ -172,8 +172,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/match:test-core --test_output=errors
@@ -183,8 +183,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/language/undefine:test-core --test_output=errors
@@ -194,8 +194,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/behaviour/graql/reasoner/explanation:test-core --test_output=errors
@@ -206,8 +206,8 @@ jobs:
     working_directory: ~/client-java
     steps:
       - checkout
-      - install-artifact-credentials
       - install-bazel
+      - install-artifact-credentials
       - run: |
           export DEPLOY_MAVEN_USERNAME=$REPO_GRAKN_USERNAME
           export DEPLOY_MAVEN_PASSWORD=$REPO_GRAKN_PASSWORD
@@ -218,8 +218,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run-bazel:
           command: bazel test //test/assembly:test-assembly-query --test_output=errors
@@ -230,8 +230,8 @@ jobs:
     working_directory: ~/client-java
     steps:
       - checkout
-      - install-artifact-credentials
       - install-bazel
+      - install-artifact-credentials
       - run-grakn
       - run: sed -i -e "s/CLIENT_JAVA_VERSION_MARKER/$CIRCLE_SHA1/g" test/deployment/pom.xml
       - run: cat test/deployment/pom.xml
@@ -242,8 +242,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run: |
           export SYNC_DEPENDENCIES_TOKEN=$REPO_GITHUB_TOKEN
@@ -255,8 +255,8 @@ jobs:
     machine: 
       image: ubuntu-1604:201903-01
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run: |
           export RELEASE_APPROVAL_USERNAME=$REPO_GITHUB_USERNAME
@@ -267,8 +267,8 @@ jobs:
     machine: 
       image: ubuntu-1604:201903-01
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run: |
           bazel run @graknlabs_dependencies//tool/release:validate-deps -- \
@@ -279,8 +279,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run: |
           pip install certifi
@@ -295,8 +295,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run: |
           export DEPLOY_MAVEN_USERNAME=$REPO_GRAKN_USERNAME
@@ -308,8 +308,8 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/client-java
     steps:
-      - install-bazel
       - checkout
+      - install-bazel
       - install-artifact-credentials
       - run: |
           export SYNC_DEPENDENCIES_TOKEN=$REPO_GITHUB_TOKEN
@@ -322,7 +322,6 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - install-artifact-credentials
       - run: git push --delete https://$REPO_GITHUB_TOKEN@github.com/graknlabs/client-java $CIRCLE_BRANCH
 
 workflows:
